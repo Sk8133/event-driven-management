@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: event-management-backend
+    env: node
+    plan: free
+    branch: main
+    buildCommand: cd backend && npm install
+    startCommand: cd backend && npm start
