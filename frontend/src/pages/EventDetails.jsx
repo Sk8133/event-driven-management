@@ -235,22 +235,7 @@ const EventDetails = () => {
     }
   };
 
-  const handleUpdateParticipantStatus = async (participantId, participantName, status) => {
-    if (!selectedSubEvent) return;
-    try {
-      await api.put(
-        `/events/${id}/subevents/${selectedSubEvent._id}/participant/${participantId}`,
-        { status }
-      );
-      setParticipantError('');
-      setStatusMessage(`${participantName} has been ${status.toLowerCase()}.`);
-      await loadParticipants(selectedSubEvent._id);
-      await fetchEvent();
-    } catch (err) {
-      setParticipantError('Unable to update participant status.');
-      setStatusMessage('');
-    }
-  };
+
 
   if (loading) {
     return <div className="p-8 text-white">Loading event details...</div>;
@@ -622,24 +607,6 @@ const EventDetails = () => {
                             <span className={`inline-flex items-center rounded-full px-3 py-1 ${getStatusClass(participant.status)}`}>
                               Status: {getStatusLabel(participant.status)}
                             </span>
-                            {participant.status === 'Registered' && (
-                              <>
-                                <button
-                                  type="button"
-                                  onClick={() => handleUpdateParticipantStatus(participant._id, participant.name, 'Approved')}
-                                  className="rounded-full bg-green-500/10 px-3 py-1 text-green-300 hover:bg-green-500/20"
-                                >
-                                  Approve
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => handleUpdateParticipantStatus(participant._id, participant.name, 'Rejected')}
-                                  className="rounded-full bg-red-500/10 px-3 py-1 text-red-300 hover:bg-red-500/20"
-                                >
-                                  Reject
-                                </button>
-                              </>
-                            )}
                           </div>
                         </div>
                       ))}
